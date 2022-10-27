@@ -5,12 +5,25 @@
 <script type="text/javascript">
 var state = 0;
 var surNameX = 10, surNameY = 30, surNameString = 'SurName';
-var givenNameX = 10, givenNameY = 70, givenNameString = 'GivenName';
-var genderX = 10, genderY = 110, genderString = 'Gender';
+var givenNameX = 10, givenNameY = 100, givenNameString = 'GivenName';
+var genderX = 10, genderY = 170, genderString = 'Gender';
 
 //onmousemove = function(e){console.log("mouse location:", e.clientX, e.clientY)}
 window.addEventListener('mousedown', (event) => {
-state = 1;
+$.x = event.clientX;
+$.y = event.clientY;
+if(isDiv(surNameX, surNameY, $.x, $.y)){
+	state = 1;
+	return;
+}
+if(isDiv(givenNameX, givenNameY, $.x, $.y)){
+	state = 2;
+	return;
+}
+if(isDiv(genderX, genderY, $.x, $.y)){
+	state = 3;
+	return;
+}
 ///console.log('mousedown', state);
 })
 window.addEventListener('mouseup', (event) => {
@@ -23,24 +36,53 @@ console.log('y', $.y);
 window.addEventListener('mousemove', (event) => {
 if (state == 1){
 //console.log('mouseup', state);
-placeDiv(event.clientX, event.clientY);
+placeDiv('SurName', event.clientX, event.clientY);
+}
+if (state == 2){
+//console.log('mouseup', state);
+placeDiv('GivenName', event.clientX, event.clientY);
+}
+if (state == 3){
+//console.log('mouseup', state);
+placeDiv('Gender', event.clientX, event.clientY);
 }
 })
 })
-function placeDiv(x_pos, y_pos) {
-  var d = document.getElementById('drag');
+function placeDiv(divId, x_pos, y_pos) {
+  var d = document.getElementById(divId);
   d.style.position = "absolute";
   d.style.left = x_pos+'px';
   d.style.top = y_pos+'px';
 }
 function initPlace(){
 console.log('initPlace run');
-  $("#SurName").x = surNameX;
-  $("#SurName").y = surNameY;
-  $("#GivenName").x = givenNameX;
-  $("#GivenName").y = givenNameY;
-  $("#Gender").x = genderX;
-  $("#Gender").y = genderY;
+  var s = document.getElementById('SurName');
+  var f = document.getElementById('GivenName');
+  var g = document.getElementById('Gender');
+  s.style.position = "absolute";
+  f.style.position = "absolute";
+  g.style.position = "absolute";
+  s.style.left = surNameX+'px';
+  s.style.top = surNameY+'px';
+  f.style.left = givenNameX+'px';
+  f.style.top = givenNameY+'px';
+  g.style.left = genderX+'px';
+  g.style.top = genderY+'px';
+}
+function showPosition(){
+console.log('surNameX', surNameX);
+console.log('surNameY', surNameY);
+console.log('givenNameX', givenNameX);
+console.log('givenNameY', givenNameY);
+console.log('genderX', genderX);
+console.log('genderY', genderY);
+}
+function isDiv(divX, divY, posX, posY){
+if(posX < divX) return false;
+if(posX > divX + 100) return false;
+if(posY < divY) return false;
+if(posY > divY + 30) return false;
+return true;
 }
 </script>
 <style>
@@ -55,6 +97,7 @@ console.log('initPlace run');
 	background-color: white;
 }
 .dragableDiv{
+	position: absolute;
 	width: 100px; 
 	height:30px; 
 	border-color: black; 
@@ -89,6 +132,6 @@ console.log('initPlace run');
 	<div class = "cornerCircle" style = " left: 93px; top: 23px; "> </div>
 <div style = "text-align: center">Gender</div>
 </div>
-<button onclick="initPlace()">Click me</button>
+<button onclick="showPosition()">Click me</button>
 </body>
 </html>
