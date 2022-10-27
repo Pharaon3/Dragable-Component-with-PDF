@@ -1,0 +1,94 @@
+<html>
+<head>
+<title> Track Mouse </title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+var state = 0;
+var surNameX = 10, surNameY = 30, surNameString = 'SurName';
+var givenNameX = 10, givenNameY = 70, givenNameString = 'GivenName';
+var genderX = 10, genderY = 110, genderString = 'Gender';
+
+//onmousemove = function(e){console.log("mouse location:", e.clientX, e.clientY)}
+window.addEventListener('mousedown', (event) => {
+state = 1;
+///console.log('mousedown', state);
+})
+window.addEventListener('mouseup', (event) => {
+state = 0;
+//console.log('mousemove', state);
+$.x = event.clientX;
+$.y = event.clientY;
+console.log('x', $.x);
+console.log('y', $.y);
+window.addEventListener('mousemove', (event) => {
+if (state == 1){
+//console.log('mouseup', state);
+placeDiv(event.clientX, event.clientY);
+}
+})
+})
+function placeDiv(x_pos, y_pos) {
+  var d = document.getElementById('drag');
+  d.style.position = "absolute";
+  d.style.left = x_pos+'px';
+  d.style.top = y_pos+'px';
+}
+function initPlace(){
+console.log('initPlace run');
+  $("#SurName").x = surNameX;
+  $("#SurName").y = surNameY;
+  $("#GivenName").x = givenNameX;
+  $("#GivenName").y = givenNameY;
+  $("#Gender").x = genderX;
+  $("#Gender").y = genderY;
+}
+</script>
+<style>
+.cornerCircle{
+	border-width: 2px;
+	border-radius: 50%;
+	border-style: solid;
+	border-color: black;
+	width: 10px;
+	height: 10px;
+	position: absolute;
+	background-color: white;
+}
+.dragableDiv{
+	width: 100px; 
+	height:30px; 
+	border-color: black; 
+	border-width: 2px;
+    border-style: solid;
+}
+</style>
+</head>
+
+<body onload = "initPlace()" >
+
+<embed src="file.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf" width="70%" height="100%" style = "float: right"/>
+<div style="width: 100%;height: 100%;position: absolute;left: 0px;top: 0px;"></div>
+<div class = "dragableDiv" id = "SurName" style = "display: flex">
+	<div class = "cornerCircle" style = " left: -7px; top: -7px; "> </div>
+	<div class = "cornerCircle" style = " left: 93px; top: -7px; "> </div>
+	<div class = "cornerCircle" style = " left: -7px; top: 23px; "> </div>
+	<div class = "cornerCircle" style = " left: 93px; top: 23px; "> </div>
+<div style = "text-align: center">Surname</div>
+</div>
+<div class = "dragableDiv" id = "GivenName" style = "display: flex">
+	<div class = "cornerCircle" style = " left: -7px; top: -7px; "> </div>
+	<div class = "cornerCircle" style = " left: 93px; top: -7px; "> </div>
+	<div class = "cornerCircle" style = " left: -7px; top: 23px; "> </div>
+	<div class = "cornerCircle" style = " left: 93px; top: 23px; "> </div>
+<div style = "text-align: center">GivenName</div>
+</div>
+<div class = "dragableDiv" id = "Gender" style = "display: flex">
+	<div class = "cornerCircle" style = " left: -7px; top: -7px; "> </div>
+	<div class = "cornerCircle" style = " left: 93px; top: -7px; "> </div>
+	<div class = "cornerCircle" style = " left: -7px; top: 23px; "> </div>
+	<div class = "cornerCircle" style = " left: 93px; top: 23px; "> </div>
+<div style = "text-align: center">Gender</div>
+</div>
+<button onclick="initPlace()">Click me</button>
+</body>
+</html>
